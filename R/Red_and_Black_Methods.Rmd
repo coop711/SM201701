@@ -28,10 +28,12 @@ kable(class_roll)
 ```{r, randomization, echo = TRUE}
 set.seed(2)
 N <- nrow(class_roll) 
-red.id <- sample(1:N, size = floor(N/2))
-red.id
-class_roll$group <- factor(ifelse((1:N) %in% red.id, "Red", "Black"), levels = c("Red", "Black"))
-black.id <- (1:N)[-red.id]
+group <- 1 + sample(1:N) %% 2
+class_roll$group <- factor(group, levels = 1:2, labels = c("Red", "Black"))
+# red.id <- sample(1:N, size = floor(N/2))
+# red.id
+# class_roll$group <- factor(ifelse((1:N) %in% red.id, "Red", "Black"), levels = c("Red", "Black"))
+# black.id <- (1:N)[-red.id]
 ```
 
 ### 학번
