@@ -1,5 +1,5 @@
 ---
-title: "Red and Black (Randomization) : Stat Methods"
+title: "Red and Black (Randomization) : SM201701"
 author: "coop711"
 date: "`r Sys.Date()`"
 output: html_document
@@ -17,6 +17,7 @@ library(knitr)
 ```{r, data, echo = TRUE, results = 'markup'}
 # class_roll <- read.xlsx("../data/class_roll.xlsx", 1, startRow = 2, endRow = 23, colIndex = c(3:7, 9), colClasses = rep("character", 6), stringsAsFactors = FALSE)
 load("./team_1701_data_win.RData")
+load("./class_roll_data_masked.RData")
 str(class_roll)
 names(class_roll) <- c("dept", "id", "name", "year", "e.mail", "cell.no")
 str(class_roll)
@@ -88,7 +89,7 @@ kable(table("Group" = class_roll$group, "Family Name" = f.name.f))
 ### 학과 분포
 
 ```{r, big departments, echo = TRUE, results = 'markup'}
-(tbl.dept <- table(class_roll$dept))
+tbl.dept <- table(class_roll$dept)
 kable(t(as.table(tbl.dept)))
 str(tbl.dept)
 dept.big <- names(tbl.dept)[tbl.dept >= 8]
@@ -101,7 +102,7 @@ kable((table("그룹" = class_roll$group, "학과" = class_roll$dept)))
 kable(table("그룹" = class_roll$group, "학과" = dept.major.f))
 ```
 
-### 출석부
+### Red and Black 출석부
 
 ```{r, class roll, echo = FALSE}
 kable(class_roll)
@@ -110,10 +111,10 @@ kable(class_roll)
 ### Red and Black 나누기
 
 ```{r, list, echo = TRUE, results = 'markup'}
-(gr.id.o <- order(class_roll$group, class_roll$name))
-(id.by.gr <- class_roll[gr.id.o, c("group", "id", "name")])
-(red.names <- id.by.gr[id.by.gr$group == "Red", c("id", "name")])
-(black.names <- id.by.gr[id.by.gr$group == "Black", c("id", "name")])
+gr.id.o <- order(class_roll$group, class_roll$name)
+id.by.gr <- class_roll[gr.id.o, c("group", "id", "name")]
+red.names <- id.by.gr[id.by.gr$group == "Red", c("id", "name")]
+black.names <- id.by.gr[id.by.gr$group == "Black", c("id", "name")]
 ```
 
 <P style="page-break-before:always">
@@ -130,6 +131,6 @@ kable(black.names, caption = "Black")
 
 <!--
 ```{r, save}
-save.image("./red_and_black_16_data.rda")
+save.image("./red_and_black_1701_data.RData")
 ```
 -->
