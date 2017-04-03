@@ -30,7 +30,7 @@ class_roll$name[not3.ind]
 names.split <- sapply(class_roll$name, function(x) unlist(strsplit(x, split = "")))
 names.split[2:3, ] <- rep("ㅇ", 2)
 class_roll$name <- apply(names.split, 2, paste, collapse = "")
-kable(head(class_roll))
+head(class_roll)
 ```
 
 ### Cell Phone Numbers
@@ -57,10 +57,10 @@ email.split[1, ] <- "user_name"
 class_roll$e.mail <- apply(email.split, 2, paste, collapse = "@")
 kable(head(class_roll))
 ```
+### Save
 
-<!--
 ```{r, save}
-write.table(class_roll, file ="../data/class_roll_masked.txt")
+write.table(class_roll, file = "../data/class_roll_masked.txt")
+write.csv(class_roll, file ="../data/class_roll_masked.csv", row.names = FALSE)
 save.image("../R/class_roll_data_masked.RData")
 ```
--->
