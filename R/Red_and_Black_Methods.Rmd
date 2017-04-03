@@ -16,10 +16,8 @@ library(knitr)
 
 ```{r, data, echo = TRUE, results = 'markup'}
 # class_roll <- read.xlsx("../data/class_roll.xlsx", 1, startRow = 2, endRow = 23, colIndex = c(3:7, 9), colClasses = rep("character", 6), stringsAsFactors = FALSE)
-# load("./team_1701_data_win.RData")
-load("./class_roll_data_masked.RData")
-str(class_roll)
-names(class_roll) <- c("dept", "id", "name", "year", "e.mail", "cell.no")
+class_roll <- read.csv("../data/class_roll_masked.csv", colClasses = rep("character", 6), stringsAsFactors = FALSE)
+# load("./class_roll_data_masked.RData")
 str(class_roll)
 kable(class_roll)
 ```
@@ -31,6 +29,7 @@ set.seed(2)
 N <- nrow(class_roll) 
 group <- 1 + sample(1:N) %% 2
 class_roll$group <- factor(group, levels = 1:2, labels = c("Red", "Black"))
+str(class_roll)
 # red.id <- sample(1:N, size = floor(N/2))
 # red.id
 # class_roll$group <- factor(ifelse((1:N) %in% red.id, "Red", "Black"), levels = c("Red", "Black"))
@@ -40,11 +39,11 @@ class_roll$group <- factor(group, levels = 1:2, labels = c("Red", "Black"))
 ### 학번
 
 ```{r, id, echo = TRUE}
-ID.14 <- factor(ifelse(substr(class_roll$id, 1, 4) >= 2014, "younger.14", "older.14"), levels=c("younger.14", "older.14"), labels = c("14학번 이후", "13학번 이전"))
+ID.14 <- factor(ifelse(substr(class_roll$id, 1, 4) >= 2014, "younger.14", "older.14"), levels = c("younger.14", "older.14"), labels = c("14학번 이후", "13학번 이전"))
 kable(table("그룹" = class_roll$group, "14학번 기준" = ID.14))
-ID.13 <- factor(ifelse(substr(class_roll$id, 1, 4) >= 2013, "younger.13", "older.13"), levels=c("younger.13", "older.13"), labels = c("13학번 이후", "12학번 이전"))
+ID.13 <- factor(ifelse(substr(class_roll$id, 1, 4) >= 2013, "younger.13", "older.13"), levels = c("younger.13", "older.13"), labels = c("13학번 이후", "12학번 이전"))
 kable(table("그룹" = class_roll$group, "13학번 기준" = ID.13))
-ID.12 <- factor(ifelse(substr(class_roll$id, 1, 4) >= 2012, "younger.12", "older.12"), levels=c("younger.12", "older.12"), labels = c("12학번 이후", "11학번 이전"))
+ID.12 <- factor(ifelse(substr(class_roll$id, 1, 4) >= 2012, "younger.12", "older.12"), levels = c("younger.12", "older.12"), labels = c("12학번 이후", "11학번 이전"))
 kable(table("그룹" = class_roll$group, "12학번 기준" = ID.12))
 ```
 
@@ -65,7 +64,8 @@ kable(table("그룹"= class_roll$group, "학년" = class_roll$year))
 
 ```{r, e_mail, echo = TRUE}
 e.mail.list <- strsplit(class_roll$e.mail, "@", fixed = TRUE)
-mail.com <- mapply("[", e.mail.list, 2)
+# mail.com <- mapply("[", e.mail.list, 2)
+mail.com <- sapply(e.mail.list, "[", 2)
 mail.com.f <- factor(ifelse(mail.com == "naver.com", mail.com, "기타 서비스업체"), levels = c("naver.com", "기타 서비스업체"))
 kable(table("그룹" = class_roll$group, "e-mail" = mail.com.f))
 ```

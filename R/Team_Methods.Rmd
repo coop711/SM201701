@@ -16,14 +16,15 @@ library(knitr)
 
 ```{r, data, echo = TRUE, results = 'markup'}
 # class_roll <- read.xlsx("../data/class_roll.xlsx", 1, startRow = 2, endRow = 23, colIndex = c(3:7, 9), colClasses = rep("character", 6), stringsAsFactors = FALSE)
-load("./class_roll_data_masked.RData")
+# load("./class_roll_data_masked.RData")
+class_roll <- read.csv("../data/class_roll_masked.csv", colClasses = rep("character", 6), stringsAsFactors = FALSE)
 str(class_roll)
 ```
 
 ### 랜덤 Team 나누기
 
 ```{r, team id, echo = TRUE}
-set.seed(3)
+# set.seed(3)
 N <- nrow(class_roll)
 group <- 1 + sample(1:N) %% 6
 class_roll$group <- factor(group, levels = 1:6, labels = paste("Team", 1:6))
